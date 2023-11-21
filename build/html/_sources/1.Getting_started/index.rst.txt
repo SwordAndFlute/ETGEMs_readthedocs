@@ -1,0 +1,7 @@
+1. Getting Started
+====================================
+
+1.1. Loading a model and inspecting it
+ETGEMs comes with pre-built enzyme-constrained metabolic network models for Escherichia coli, 
+Bacillus subtilis, and Corynebacterium glutamicum. To load the Escherichia coli enzyme-constrained 
+metabolic network model, type
