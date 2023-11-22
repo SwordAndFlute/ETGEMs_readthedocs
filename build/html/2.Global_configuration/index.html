@@ -46,7 +46,14 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../1.Getting_started/index.html">1. Getting Started</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">2. Global Configuration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2. Global Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#reaction-bounds">2.1. Reaction bounds</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#metabolite-bounds">2.2. Metabolite bounds</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#enzyme-related-parameters">2.3. Enzyme-related parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#thermodynamic-related-parameters">2.4. Thermodynamic-related parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#medium">2.5. Medium</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../3.Building_a_model/index.html">3. Building a Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../4.Reading_and_write_model/index.html">4. Reading and Write Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../5.Simulating_with_FBA/index.html">5. Simulating with FBA</a></li>
@@ -73,7 +80,7 @@
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">2. Global Configuration</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/2.Global_configuration/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/2.Global_configuration/index.md.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -83,9 +90,106 @@
              
   <section id="global-configuration">
 <h1>2. Global Configuration<a class="headerlink" href="#global-configuration" title="Link to this heading"></a></h1>
-<ol class="arabic simple" start="2">
-<li></li>
-</ol>
+<p>When converting the GEM structure to the ETGEMs format, it is necessary to assign initial values to various parameters in the model. This chapter primarily provides the initial values of parameters in ETGEMs before the automated acquisition of parameters.</p>
+<p>The function trans_model2standard_json_etgem() can be used to convert a standard GEM into the standard ETGEMs format and save it at the specified path.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">autoETGEMs</span>
+<span class="kn">from</span> <span class="nn">autoETGEMs.io.convert</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">autoETGEMs.io.json</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">trans_model2standard_json_etgem</span><span class="p">(</span><span class="s2">&quot;./autoETGEMs/model/iML1515_github.json&quot;</span><span class="p">,</span><span class="s2">&quot;./autoETGEMs/model/iML1515_standard.json&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The read_json_model() function is used to read a JSON-formatted ETGEMs model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">read_json_model</span><span class="p">(</span><span class="s2">&quot;./autoETGEMs/model/iML1515_standard.json&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="reaction-bounds">
+<h2>2.1. Reaction bounds<a class="headerlink" href="#reaction-bounds" title="Link to this heading"></a></h2>
+<p>The default value for the reaction flux upper limit in GEM is set to 1000, consistent with Cobra settings. However, in contrast, in ETGEMs where reversible reactions are not present, the default value for the reaction flux lower limit is set to 0.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">reaction</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_reaction_by_id</span><span class="p">(</span><span class="s2">&quot;PDH&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;default upper bound : &quot;</span><span class="p">,</span><span class="n">reaction</span><span class="o">.</span><span class="n">upper_bound</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;default lower bound : &quot;</span><span class="p">,</span><span class="n">reaction</span><span class="o">.</span><span class="n">lower_bound</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">default</span> <span class="n">upper</span> <span class="n">bound</span> <span class="p">:</span>  <span class="mf">1000.0</span>
+<span class="n">default</span> <span class="n">lower</span> <span class="n">bound</span> <span class="p">:</span>  <span class="mf">0.0</span>
+</pre></div>
+</div>
+</section>
+<section id="metabolite-bounds">
+<h2>2.2. Metabolite bounds<a class="headerlink" href="#metabolite-bounds" title="Link to this heading"></a></h2>
+<p>In ETGEMs, the concentration range for most metabolites is set to 0.5 μM to 20 mM. The concentration limits are stored in the corresponding metabolites in ln form.</p>
+<p>Additionally, constraints are applied to the concentration ratios of five pairs of metabolites: ATP:ADP, ADP:AMP, NAD+:NADH, NADPH:NADP+, and HCO₃⁻: CO₂. These concentration ratios are respectively set to 10:1, 1:1, 10:1, 10:1, and 2:1.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">metabolite</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_metabolite_by_id</span><span class="p">(</span><span class="s2">&quot;atp_c&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;default concentration upper bound : &quot;</span><span class="p">,</span><span class="n">metabolite</span><span class="o">.</span><span class="n">concentration_ub</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;default concentration lower bound : &quot;</span><span class="p">,</span><span class="n">metabolite</span><span class="o">.</span><span class="n">concentration_lb</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">default</span> <span class="n">concentration</span> <span class="n">upper</span> <span class="n">bound</span> <span class="p">:</span>  <span class="o">-</span><span class="mf">3.912023005</span>
+<span class="n">default</span> <span class="n">concentration</span> <span class="n">lower</span> <span class="n">bound</span> <span class="p">:</span>  <span class="o">-</span><span class="mf">14.50865774</span>
+</pre></div>
+</div>
+</section>
+<section id="enzyme-related-parameters">
+<h2>2.3. Enzyme-related parameters<a class="headerlink" href="#enzyme-related-parameters" title="Link to this heading"></a></h2>
+<p>Due to the calculation of enzyme usage in terms of enzyme molecular weight (MW) divided by turnover number (kcat), at the initial state, to approach an enzyme usage close to 0, we set the default value of MW to 1 and the default value of kcat to 99999.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;default kcat : &quot;</span><span class="p">,</span> <span class="n">reaction</span><span class="o">.</span><span class="n">kcat</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;default MW : &quot;</span><span class="p">,</span> <span class="n">reaction</span><span class="o">.</span><span class="n">mw</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">default</span> <span class="n">kcat</span> <span class="p">:</span>  <span class="mf">99999.0</span>
+<span class="n">default</span> <span class="n">MW</span> <span class="p">:</span>  <span class="mf">1.0</span>
+</pre></div>
+</div>
+<p>In addition to the enzyme-related parameters for reactions, the calculation of enzyme constraints also requires defining the total enzyme weight. The total enzyme weight parameter can be queried using model.E_total with a default value of 1.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;default total enzyme weight : &quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">E_total</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">default</span> <span class="n">total</span> <span class="n">enzyme</span> <span class="n">weight</span> <span class="p">:</span>  <span class="mf">1.0</span>
+</pre></div>
+</div>
+</section>
+<section id="thermodynamic-related-parameters">
+<h2>2.4. Thermodynamic-related parameters<a class="headerlink" href="#thermodynamic-related-parameters" title="Link to this heading"></a></h2>
+<p>At the initial state, by default, all reactions are thermodynamically feasible, and the default standard Gibbs free energy of reactions is set to -99999.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;default standard Gibbs free energy: &quot;</span><span class="p">,</span> <span class="n">reaction</span><span class="o">.</span><span class="n">g0</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">default</span> <span class="n">standard</span> <span class="n">Gibbs</span> <span class="n">free</span> <span class="n">energy</span><span class="p">:</span>  <span class="o">-</span><span class="mf">99999.0</span>
+</pre></div>
+</div>
+<p>In ETGEMs, when computing thermodynamic constraints, the calculation of the K_value involves the standard Gibbs free energy of reactions. The default value for K_value is set to 0.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;default K_value: &quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">K_value</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">default</span> <span class="n">K_value</span><span class="p">:</span>  <span class="mf">0.0</span>
+</pre></div>
+</div>
+<p>In addition to the parameters required for the aforementioned calculations, in the process of automating the retrieval of standard Gibbs free energy of reactions using the equilibrator-api, specific conditions need to be provided. These parameters are stored in model.environment, and their default values are as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;default ph: &quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">p_h</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;default pmg: &quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">p_mg</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;default temperature: &quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">temperature</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;default ionic strength: &quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">ionic_strength</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">default</span> <span class="n">ph</span><span class="p">:</span>  <span class="mf">7.5</span>
+<span class="n">default</span> <span class="n">pmg</span><span class="p">:</span>  <span class="mf">3.0</span>
+<span class="n">default</span> <span class="n">temperature</span><span class="p">:</span>  <span class="mf">310.15</span><span class="n">K</span>
+<span class="n">default</span> <span class="n">ionic</span> <span class="n">strength</span><span class="p">:</span>  <span class="mf">0.1</span><span class="n">M</span>
+</pre></div>
+</div>
+</section>
+<section id="medium">
+<h2>2.5. Medium<a class="headerlink" href="#medium" title="Link to this heading"></a></h2>
+<p>By default, in ETGEMs, the medium is empty, and attempting to directly compute fluxes will result in an error. Therefore, it is necessary to use model.add_medium() to add the components of the medium beforehand.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">medium</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{}</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
