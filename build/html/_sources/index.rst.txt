@@ -13,7 +13,7 @@ Welcome to ETGEMs's documentation!
    1.Getting_started/index
    2.Global_configuration/index
    3.Building_a_model/index
-   4.Reading_and_write_model/index
+   4.Reading_correcting_and_write_model/index
    5.Simulating_with_FBA/index
    6.Bottleneck_reactions/index
    7.Limitation_metabolites/index
