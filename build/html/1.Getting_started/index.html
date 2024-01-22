@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1. Getting Started &mdash; ETGEMs v1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5cb08e4e"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2. Global Configuration" href="../2.Global_configuration/index.html" />
+    <link rel="prev" title="Welcome to ETGEMs’s documentation!" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ETGEMs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#loading-a-model-and-inspecting-it">1.1. Loading a model and inspecting it</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reactions">1.2. Reactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#metabolites">1.3. Metabolites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#genes">1.4. Genes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#medium">1.5. Medium</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#environment">1.6. Environment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2.Global_configuration/index.html">2. Global Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3.Building_a_model/index.html">3. Building a Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4.Reading_and_write_model/index.html">4. Reading and Write Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5.Simulating_with_FBA/index.html">5. Simulating with FBA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6.Bottleneck_reactions/index.html">6. Bottleneck Reactions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../7.Limitation_metabolites/index.html">7. Limitation Metabolites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../8.Bottleneck_enzymes/index.html">8. Bottleneck Enzymes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../9.Genetic_modification_target/index.html">9. Genetic Modification Target</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../10.Solvers/index.html">10. Solvers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ETGEMs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">1. Getting Started</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/1.Getting_started/index.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="getting-started">
+<h1>1. Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h1>
+<section id="loading-a-model-and-inspecting-it">
+<h2>1.1. Loading a model and inspecting it<a class="headerlink" href="#loading-a-model-and-inspecting-it" title="Link to this heading"></a></h2>
+<p>ETGEMs comes with pre-built Enzyme and Thermodynic constrained Genome-scale mEtabolic network Models (ETGEMs) for <em>Escherichia coli</em>, <em>Bacillus subtilis</em>, and <em>Corynebacterium glutamicum</em>. To load the ETGEMs of <em>Escherichia coli</em>, type</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">autoETGEMs</span>
+<span class="kn">from</span> <span class="nn">autoETGEMs.io.json</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">read_json_model</span><span class="p">(</span><span class="s2">&quot;../autoETGEMs/model/iML1515_etcmodel.json&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Reactions, metabolites, and genes are individually established as objects and stored in the form of dictionaries in model.reactions, model.metabolites, and model.genes. The keys of the dictionaries represent the names, and the values correspond to the respective objects.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">reactions</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">metabolites</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">genes</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">5918</span>
+<span class="mi">1877</span>
+<span class="mi">1516</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">metabolites</span><span class="p">[</span><span class="s2">&quot;coa_c&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">autoETGEMs</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">metabolite</span><span class="o">.</span><span class="n">Metabolite</span> <span class="n">at</span> <span class="mh">0x22276010fd0</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">reactions</span><span class="p">[</span><span class="s2">&quot;PDH&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">autoETGEMs</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">reaction</span><span class="o">.</span><span class="n">Reaction</span> <span class="n">at</span> <span class="mh">0x222757c99b0</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>In addition, the medium is also separately stored as a dictionary in the model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">medium</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;EX_glc__D_e_reverse&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The construction and computation of ETGEMs require some additional parameters, which are stored in model.environment.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">environment</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">autoETGEMs</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">Environment</span> <span class="n">at</span> <span class="mh">0x222760a9208</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="reactions">
+<h2>1.2. Reactions<a class="headerlink" href="#reactions" title="Link to this heading"></a></h2>
+<p>You can use get_reaction_by_id() to find the corresponding reaction by its name.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">reaction</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_reaction_by_id</span><span class="p">(</span><span class="s2">&quot;PDH&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">reaction</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PDH</span><span class="p">:</span> <span class="n">coa_c</span> <span class="o">+</span> <span class="n">nad_c</span> <span class="o">+</span> <span class="n">pyr_c</span> <span class="o">&lt;=&gt;</span> <span class="n">accoa_c</span> <span class="o">+</span> <span class="n">co2_c</span> <span class="o">+</span> <span class="n">nadh_c</span>
+</pre></div>
+</div>
+<p>You can directly view the information contained in a reaction by accessing its attributes or properties. For example, you might inspect properties such as reaction.id, reaction.name, reaction.metabolites, etc..</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">reaction</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">reaction</span><span class="o">.</span><span class="n">metabolites</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PDH</span>
+<span class="p">{</span><span class="s1">&#39;accoa_c&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;co2_c&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;coa_c&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;nad_c&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;nadh_c&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;pyr_c&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The reactions include upper and lower bounds for flux. Unlike cobrapy, where all reactions in the model are bidirectional, in this model, all reactions are split into irreversibility reactions, hence the upper and lower bounds for reactions are both greater than 0.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;lower_bound : &quot;</span><span class="p">,</span> <span class="n">reaction</span><span class="o">.</span><span class="n">lower_bound</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;upper_bound : &quot;</span><span class="p">,</span> <span class="n">reaction</span><span class="o">.</span><span class="n">upper_bound</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lower_bound</span> <span class="p">:</span>  <span class="mf">0.0</span>
+<span class="n">upper_bound</span> <span class="p">:</span>  <span class="mf">1000.0</span>
+</pre></div>
+</div>
+<p>If the lower bound of a reaction is set to be greater than the upper bound, an error will be raised.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">reaction</span><span class="o">.</span><span class="n">set_lower_bound</span><span class="p">(</span><span class="mi">1100</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">ValueError</span>                                <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">34</span><span class="o">-</span><span class="mi">81</span><span class="n">bd5304f44f</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="n">reaction</span><span class="o">.</span><span class="n">set_lower_bound</span><span class="p">(</span><span class="mi">1100</span><span class="p">)</span>
+
+
+<span class="n">d</span><span class="p">:</span>\<span class="n">autoETGEMs</span>\<span class="n">etgems</span><span class="o">-</span><span class="n">master</span>\<span class="n">autoETGEMs_test</span>\<span class="n">autoETGEMs</span>\<span class="n">core</span>\<span class="n">reaction</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="n">set_lower_bound</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="mi">246</span>         <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    247         # Validate bounds before setting them.</span>
+<span class="s2">--&gt; 248         self.check_bounds(value, self.upper_bound)</span>
+<span class="s2">    249         self.lower_bound = value</span>
+<span class="s2">    250 </span>
+
+
+<span class="s2">d:</span><span class="se">\a</span><span class="s2">utoETGEMs\etgems-master</span><span class="se">\a</span><span class="s2">utoETGEMs_test</span><span class="se">\a</span><span class="s2">utoETGEMs\core</span><span class="se">\r</span><span class="s2">eaction.py in check_bounds(self, lb, ub)</span>
+<span class="s2">    266         if lb &gt; ub:</span>
+<span class="s2">    267             raise ValueError(</span>
+<span class="s2">--&gt; 268                 f&quot;The lower bound must be less than or equal to the upper bound &quot;</span>
+<span class="s2">    269                 f&quot;(</span><span class="si">{lb}</span><span class="s2"> &lt;= </span><span class="si">{ub}</span><span class="s2">).&quot;</span>
+<span class="s2">    270             )    </span>
+
+
+<span class="s2">ValueError: The lower bound must be less than or equal to the upper bound (1100 &lt;= 1000.0).</span>
+</pre></div>
+</div>
+<p>For ETGEMs, reactions also store enzyme turnover number (kcat), enzyme molecular weight (MW), and the standard Gibbs free energy of the reaction to meet the computational requirements for enzyme constraints and thermodynamic constraints.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;reaction kcat : &quot;</span><span class="p">,</span> <span class="n">reaction</span><span class="o">.</span><span class="n">kcat</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;reaction MW : &quot;</span><span class="p">,</span> <span class="n">reaction</span><span class="o">.</span><span class="n">mw</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;reaction g0 : &quot;</span><span class="p">,</span> <span class="n">reaction</span><span class="o">.</span><span class="n">g0</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">reaction</span> <span class="n">kcat</span> <span class="p">:</span>  <span class="mf">37.9</span>
+<span class="n">reaction</span> <span class="n">MW</span> <span class="p">:</span>  <span class="mf">216452.0</span>
+<span class="n">reaction</span> <span class="n">g0</span> <span class="p">:</span>  <span class="o">-</span><span class="mf">34.4</span>
+</pre></div>
+</div>
+</section>
+<section id="metabolites">
+<h2>1.3. Metabolites<a class="headerlink" href="#metabolites" title="Link to this heading"></a></h2>
+<p>Similar to reactions, you can find a specific metabolite by its name.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">atp</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_metabolite_by_id</span><span class="p">(</span><span class="s2">&quot;atp_c&quot;</span><span class="p">)</span>
+<span class="n">atp</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">autoETGEMs</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">metabolite</span><span class="o">.</span><span class="n">Metabolite</span> <span class="n">at</span> <span class="mh">0x22275fa2d30</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>You can easily view information such as the metabolite’s name, charge, chemical formula, and more.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">atp</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">atp</span><span class="o">.</span><span class="n">charge</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">atp</span><span class="o">.</span><span class="n">formula</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">atp</span><span class="o">.</span><span class="n">compartment</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ATP</span> <span class="n">C10H12N5O13P3</span>
+<span class="o">-</span><span class="mi">4</span>
+<span class="n">C10H12N5O13P3</span>
+<span class="n">c</span>
+</pre></div>
+</div>
+<p>To meet the computational requirements of MDF, we have also added upper and lower bounds for metabolite concentrations, similar to setting upper and lower bounds for reaction fluxes. If the lower bound of a metabolite concentration is set higher than the upper bound, the code will automatically raise an error.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;concentration upperbound : &quot;</span><span class="p">,</span><span class="n">atp</span><span class="o">.</span><span class="n">concentration_ub</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;concentration lowerbound : &quot;</span><span class="p">,</span><span class="n">atp</span><span class="o">.</span><span class="n">concentration_lb</span><span class="p">)</span>
+<span class="n">atp</span><span class="o">.</span><span class="n">set_concentration_lb</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">concentration</span> <span class="n">upperbound</span> <span class="p">:</span>  <span class="o">-</span><span class="mf">3.912023005</span>
+<span class="n">concentration</span> <span class="n">lowerbound</span> <span class="p">:</span>  <span class="o">-</span><span class="mf">14.50865774</span>
+
+
+
+<span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">ValueError</span>                                <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">38</span><span class="o">-</span><span class="mi">9</span><span class="n">efbbdfb0d1a</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+      <span class="mi">1</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;concentration upperbound : &quot;</span><span class="p">,</span><span class="n">atp</span><span class="o">.</span><span class="n">concentration_ub</span><span class="p">)</span>
+      <span class="mi">2</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;concentration lowerbound : &quot;</span><span class="p">,</span><span class="n">atp</span><span class="o">.</span><span class="n">concentration_lb</span><span class="p">)</span>
+<span class="o">----&gt;</span> <span class="mi">3</span> <span class="n">atp</span><span class="o">.</span><span class="n">set_concentration_lb</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span>
+
+
+<span class="n">d</span><span class="p">:</span>\<span class="n">autoETGEMs</span>\<span class="n">etgems</span><span class="o">-</span><span class="n">master</span>\<span class="n">autoETGEMs_test</span>\<span class="n">autoETGEMs</span>\<span class="n">core</span>\<span class="n">metabolite</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="n">set_concentration_lb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">concentration_lb</span><span class="p">)</span>
+     <span class="mi">59</span>             <span class="n">The</span> <span class="n">lower</span> <span class="n">bound</span> <span class="n">of</span> <span class="n">the</span> <span class="n">concentration</span><span class="o">.</span>
+     <span class="mi">60</span>         <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">---&gt; 61         self.check_bounds(concentration_lb, self.concentration_ub)</span>
+<span class="s2">     62         self.concentration_lb = concentration_lb</span>
+<span class="s2">     63 </span>
+
+
+<span class="s2">d:</span><span class="se">\a</span><span class="s2">utoETGEMs\etgems-master</span><span class="se">\a</span><span class="s2">utoETGEMs_test</span><span class="se">\a</span><span class="s2">utoETGEMs\core\metabolite.py in check_bounds(self, lb, ub)</span>
+<span class="s2">     79         if lb &gt; ub:</span>
+<span class="s2">     80             raise ValueError(</span>
+<span class="s2">---&gt; 81                 f&quot;The lower bound must be less than or equal to the upper bound &quot;</span>
+<span class="s2">     82                 f&quot;(</span><span class="si">{lb}</span><span class="s2"> &lt;= </span><span class="si">{ub}</span><span class="s2">).&quot;</span>
+<span class="s2">     83             )</span>
+
+
+<span class="s2">ValueError: The lower bound must be less than or equal to the upper bound (-3 &lt;= -3.912023005).</span>
+</pre></div>
+</div>
+</section>
+<section id="genes">
+<h2>1.4. Genes<a class="headerlink" href="#genes" title="Link to this heading"></a></h2>
+<p>Similarly to reactions and metabolites, genes can also be queried by name.
+Additionally, genes encoding enzymes catalyzing a reaction are saved in the GPR (Gene-Protein-Reaction) relationship of the reaction.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">reaction</span><span class="o">.</span><span class="n">gene_reaction_rule</span><span class="p">)</span>
+<span class="n">b0115</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_gene_by_id</span><span class="p">(</span><span class="s2">&quot;b0115&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b0116</span> <span class="ow">and</span> <span class="n">b0115</span> <span class="ow">and</span> <span class="n">b0114</span>
+</pre></div>
+</div>
+</section>
+<section id="medium">
+<h2>1.5. Medium<a class="headerlink" href="#medium" title="Link to this heading"></a></h2>
+<p>In the medium, the substrates used for model growth are saved in dictionary form. The keys of the dictionary are the names of the reactions for substrate uptake, and the values are the upper limits for those reactions. You can view information about the model’s substrates through model.medium.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">medium</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;EX_glc__D_e_reverse&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>You can add and remove components from the model’s medium using add_medium() and remove_medium() functions, respectively.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">remove_medium</span><span class="p">(</span><span class="s2">&quot;EX_glc__D_e_reverse&quot;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">medium</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{}</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">add_medium</span><span class="p">(</span><span class="s2">&quot;EX_glc__D_e_reverse&quot;</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">medium</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;EX_glc__D_e_reverse&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="environment">
+<h2>1.6. Environment<a class="headerlink" href="#environment" title="Link to this heading"></a></h2>
+<p>Parameters used for obtaining standard Gibbs free energy, as well as parameters for enzyme constraints and thermodynamic constraints calculations, are stored in the environment of the model. By changing the parameter values, you can simulate bacterial growth under different conditions.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ionic strength : &quot;</span><span class="p">,</span><span class="n">model</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">get_ionic_strength</span><span class="p">())</span>
+<span class="n">model</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">set_ionic_strength</span><span class="p">(</span><span class="s2">&quot;0.2M&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;new ionic strength : &quot;</span><span class="p">,</span><span class="n">model</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">get_ionic_strength</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ionic</span> <span class="n">strength</span> <span class="p">:</span>  <span class="mf">0.1</span><span class="n">M</span>
+<span class="n">new</span> <span class="n">ionic</span> <span class="n">strength</span> <span class="p">:</span>  <span class="mf">0.2</span><span class="n">M</span>
+</pre></div>
+</div>
+<p>Among them, K_value and E_total can be quickly queried.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;K_value : &quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">K_value</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;E_total : &quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">E_total</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">K_value</span> <span class="p">:</span>  <span class="mf">10353.64521565178</span>
+<span class="n">E_total</span> <span class="p">:</span>  <span class="mf">0.22680000000000003</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to ETGEMs’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../2.Global_configuration/index.html" class="btn btn-neutral float-right" title="2. Global Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, zhao jianxiao.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
