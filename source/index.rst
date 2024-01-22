@@ -18,7 +18,7 @@ Welcome to ETGEMs's documentation!
    6.Bottleneck_reactions/index
    7.Limitation_metabolites/index
    8.Bottleneck_enzymes/index
-   9.Genetic_modification_target/index
+   9.Identification_of_transcriptional_factor_targets/index
 
 
 
